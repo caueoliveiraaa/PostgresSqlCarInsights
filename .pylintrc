@@ -1,0 +1,623 @@
+[MAIN]
+
+# Analisa blocos de fallback de importação. Isso pode ser usado para suportar
+# código compatível com Python 2 e 3, o que significa que o bloco pode conter
+# código que existe apenas em um dos interpretadores, levando a falsos positivos
+# durante a análise.
+analyse-fallback-blocks=no
+
+# Limpa os caches em memória após a conclusão da análise. Útil se o Pylint estiver
+# sendo executado em modo servidor.
+# clear-cache-post-run=
+
+# Carrega e ativa todas as extensões disponíveis. Use --list-extensions para ver
+# uma lista de todas as extensões disponíveis.
+enable=
+
+# No modo de erro, mensagens com categorias diferentes de ERROR ou FATAL são
+# suprimidas, e nenhum relatório é gerado por padrão. O modo de erro é compatível
+# com a desativação de erros específicos.
+errors-only=yes
+
+# Sempre retorna o código de status 0 (sem erro), mesmo que erros de lint sejam encontrados.
+# Isso é principalmente útil em scripts de integração contínua.
+#exit-zero=
+
+# Uma lista separada por vírgulas de pacotes ou módulos de onde extensões C podem
+# ser carregadas. As extensões são carregadas no interpretador Python ativo e podem
+# executar código arbitrário.
+extension-pkg-allow-list=pyodbc,beartype
+
+# Uma lista separada por vírgulas de pacotes ou módulos de onde extensões C podem
+# ser carregadas. As extensões são carregadas no interpretador Python ativo e podem
+# executar código arbitrário. (Este é um nome alternativo para extension-pkg-allow-list
+# para compatibilidade com versões anteriores.)
+extension-pkg-whitelist=
+
+# Retorna um código de saída diferente de zero se qualquer uma dessas mensagens/categorias
+# for detectada, mesmo que a pontuação esteja acima do valor definido em --fail-under.
+# A sintaxe é a mesma da opção enable. As mensagens especificadas são ativadas, enquanto
+# as categorias verificam apenas mensagens já ativadas.
+fail-on=E,F
+# [NOTE] Faz com que o Pylint retorne um código de saída diferente de zero se encontrar
+# mensagens com os códigos E (Error) ou F (Fatal). Isso é essencial para falhar
+# builds em CI quando há problemas sérios.
+
+# Especifica um limite mínimo de pontuação abaixo do qual o programa encerrará com erro.
+fail-under=10
+
+# Interpreta a entrada padrão (stdin) como um script Python, cujo nome do arquivo
+# precisa ser passado como argumento module_or_package.
+#from-stdin=
+
+# Arquivos ou diretórios a serem ignorados. Devem ser nomes base, não caminhos completos.
+ignore=CVS,__pycache__,.pytest_cache,.mypy_cache,.venv,env,logs,htmlcov,.vscode,.github,javascript
+
+# Adiciona arquivos ou diretórios que correspondem a padrões de expressões regulares
+# à lista de ignorados. A regex é aplicada sobre os caminhos e pode estar em formato
+# Posix ou Windows. Como '\\' representa o delimitador de diretório no Windows,
+# ele não pode ser usado como caractere de escape.
+ignore-paths=env/.*,logs/.*,htmlcov/.*,docs/.*,\.github/.*,\.vscode/.*,\javascript/.*
+
+# Arquivos ou diretórios que correspondem a padrões de expressões regulares são ignorados.
+# A regex é aplicada sobre os nomes base, não sobre os caminhos. O valor padrão ignora
+# arquivos de bloqueio do Emacs.
+ignore-patterns=^\.#
+
+# Lista de nomes de módulos cujos atributos de membros não devem ser verificados
+# e não serão importados (útil para módulos/projetos onde os namespaces são manipulados
+# em tempo de execução e, portanto, os atributos existentes não podem ser deduzidos
+# por análise estática). Suporta nomes de módulos qualificados e padrões Unix.
+ignored-modules=pyodbc,selenium,SQLAlchemy,dill,beartype,requests,nltk
+
+# Código Python a ser executado, geralmente para manipulação de sys.path,
+# como por exemplo pygtk.require().
+#init-hook=
+
+# Usa múltiplos processos para acelerar o Pylint. Especificar 0 detecta
+# automaticamente o número de processadores disponíveis, e limita esse número
+# no Windows para evitar travamentos.
+jobs=1
+
+# Controla a quantidade de valores inferidos ao tentar deduzir um único objeto.
+# Isso pode melhorar o desempenho ao lidar com funções grandes ou condições
+# complexas e aninhadas.
+limit-inference-results=100
+
+# Lista de plugins (como nomes de módulos Python separados por vírgulas) a serem
+# carregados, geralmente para registrar verificadores adicionais.
+load-plugins=
+
+# Armazena dados coletados em formato pickle para comparações futuras.
+persistent=yes
+
+# Resolve importações para arquivos .pyi se disponíveis. Pode reduzir mensagens
+# de "no-member" e aumentar mensagens de "not-an-iterable".
+# prefer-stubs=
+
+# Versão mínima do Python a ser usada para verificações dependentes de versão.
+# Por padrão, será usada a versão com a qual o Pylint está sendo executado.
+py-version=3.13
+
+# Descobre módulos e pacotes Python na subárvore do sistema de arquivos.
+recursive=no
+
+# Adiciona caminhos à lista de raízes do código-fonte. Suporta padrões glob.
+# A raiz do código-fonte é um caminho absoluto ou relativo ao diretório atual,
+# usado para determinar o namespace de pacotes para módulos localizados sob essa raiz.
+# source-roots=
+
+# Quando ativado, o Pylint tentará adivinhar configurações comuns incorretas e
+# emitirá dicas amigáveis ao usuário em vez de mensagens de erro falsas.
+
+# Permite o carregamento de extensões C arbitrárias. As extensões são importadas
+# para o interpretador Python ativo e podem executar código arbitrário.
+unsafe-load-any-extension=no
+
+# No modo verboso, informações extras não relacionadas aos verificadores serão exibidas.
+#verbose=
+
+
+[BASIC]
+
+# Estilo de nomenclatura que corresponde a nomes corretos de argumentos.
+argument-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de argumentos. Substitui o
+# estilo definido em argument-naming-style. Se deixado vazio, os nomes dos argumentos
+# serão verificados com base no estilo definido.
+#argument-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de atributos.
+attr-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de atributos. Substitui o
+# estilo definido em attr-naming-style. Se deixado vazio, os nomes dos atributos
+# serão verificados com base no estilo definido.
+#attr-rgx=
+
+# Nomes de variáveis ruins que devem sempre ser recusados, separados por vírgula.
+bad-names=foo,
+          bar,
+          baz,
+          toto,
+          tutu,
+          tata,
+          x,
+          y
+
+# Expressões regulares de nomes ruins, separadas por vírgula. Se os nomes corresponderem
+# a qualquer regex, serão sempre recusados.
+bad-names-rgxs=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de atributos de classe.
+class-attribute-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de atributos de classe. Substitui o
+# estilo definido em class-attribute-naming-style. Se deixado vazio, os nomes dos atributos
+# de classe serão verificados com base no estilo definido.
+#class-attribute-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de constantes de classe.
+class-const-naming-style=UPPER_CASE
+
+# Expressão regular que corresponde a nomes corretos de constantes de classe. Substitui o
+# estilo definido em class-const-naming-style. Se deixado vazio, os nomes das constantes
+# de classe serão verificados com base no estilo definido.
+#class-const-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de classes.
+class-naming-style=PascalCase
+
+# Expressão regular que corresponde a nomes corretos de classes. Substitui o
+# estilo definido em class-naming-style. Se deixado vazio, os nomes das classes
+# serão verificados com base no estilo definido.
+#class-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de constantes.
+const-naming-style=UPPER_CASE
+
+# Expressão regular que corresponde a nomes corretos de constantes. Substitui o
+# estilo definido em const-naming-style. Se deixado vazio, os nomes das constantes
+# serão verificados com base no estilo definido.
+#const-rgx=
+
+# Tamanho mínimo de linha para funções/classes que exigem docstrings. Linhas
+# menores que esse valor estão isentas.
+docstring-min-length=-1
+
+# Estilo de nomenclatura que corresponde a nomes corretos de funções.
+function-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de funções. Substitui o
+# estilo definido em function-naming-style. Se deixado vazio, os nomes das funções
+# serão verificados com base no estilo definido.
+#function-rgx=
+
+# Nomes de variáveis considerados bons e que sempre serão aceitos, separados por vírgula.
+good-names=i,
+           j,
+           k,
+           ex,
+           Run,
+           _
+
+# Expressões regulares de nomes bons, separadas por vírgula. Se os nomes corresponderem
+# a qualquer regex, serão sempre aceitos.
+good-names-rgxs=
+
+# Inclui uma dica sobre o formato de nomenclatura correto quando um nome inválido for detectado.
+include-naming-hint=yes
+
+# Estilo de nomenclatura que corresponde a nomes corretos de variáveis usadas em iterações inline.
+inlinevar-naming-style=any
+
+# Expressão regular que corresponde a nomes corretos de variáveis inline. Substitui o
+# estilo definido em inlinevar-naming-style. Se deixado vazio, os nomes serão verificados
+# com base no estilo definido.
+#inlinevar-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de métodos.
+method-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de métodos. Substitui o
+# estilo definido em method-naming-style. Se deixado vazio, os nomes dos métodos
+# serão verificados com base no estilo definido.
+#method-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de módulos.
+module-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de módulos. Substitui o
+# estilo definido em module-naming-style. Se deixado vazio, os nomes dos módulos
+# serão verificados com base no estilo definido.
+#module-rgx=
+
+# Conjuntos de nomes delimitados por dois-pontos que determinam o estilo de
+# nomenclatura uns dos outros quando as expressões regulares permitem vários estilos.
+name-group=
+
+# Expressão regular que deve corresponder apenas a nomes de funções ou classes
+# que não exigem docstring.
+no-docstring-rgx=^_
+
+# Lista de decoradores que produzem propriedades, como abc.abstractproperty.
+# Adicione a esta lista para registrar outros decoradores que produzem propriedades válidas.
+# Esses decoradores são considerados apenas para nomes inválidos.
+property-classes=abc.abstractproperty
+
+# Expressão regular que corresponde a nomes corretos de aliases de tipo.
+# Se deixado vazio, os nomes serão verificados com base no estilo definido.
+#typealias-rgx=
+
+# Expressão regular que corresponde a nomes corretos de variáveis de tipo.
+# Se deixado vazio, os nomes serão verificados com base no estilo definido.
+#typevar-rgx=
+
+# Estilo de nomenclatura que corresponde a nomes corretos de variáveis.
+variable-naming-style=snake_case
+
+# Expressão regular que corresponde a nomes corretos de variáveis. Substitui o
+# estilo definido em variable-naming-style. Se deixado vazio, os nomes das variáveis
+# serão verificados com base no estilo definido.
+#variable-rgx=
+
+
+[CLASSES]
+
+# Avisar sobre acesso a atributos protegidos dentro de métodos especiais.
+check-protected-access-in-special-methods=no
+
+# Lista de nomes de métodos usados para declarar (ou seja, atribuir) atributos de instância.
+defining-attr-methods=__init__,
+                      __new__,
+                      setUp,
+                      asyncSetUp,
+                      __post_init__
+
+# Lista de nomes de membros que devem ser excluídos do aviso de acesso protegido.
+exclude-protected=_asdict,_fields,_replace,_source,_make,os._exit
+
+# Lista de nomes válidos para o primeiro argumento em um método de classe.
+valid-classmethod-first-arg=cls
+
+# Lista de nomes válidos para o primeiro argumento em um método de classe de metaclasse.
+valid-metaclass-classmethod-first-arg=mcs
+
+
+[DESIGN]
+
+# Lista de expressões regulares de nomes de classes ancestrais a serem ignoradas
+# ao contar métodos públicos (ver R0903).
+exclude-too-few-public-methods=
+
+# Lista de nomes qualificados de classes a serem ignoradas ao contar pais de classe (ver R0901).
+ignored-parents=
+
+# Número máximo de argumentos para funções/métodos.
+max-args=3
+
+# Número máximo de atributos para uma classe (ver R0902).
+max-attributes=10
+
+# Número máximo de expressões booleanas em uma instrução if (ver R0916).
+max-bool-expr=5
+
+# Número máximo de ramificações no corpo de uma função/método.
+max-branches=12
+
+# Número máximo de variáveis locais no corpo de uma função/método.
+max-locals=15
+
+# Número máximo de classes pai para uma classe (ver R0901).
+max-parents=7
+
+# Número máximo de argumentos posicionais para funções/métodos.
+max-positional-arguments=3
+
+# Número máximo de métodos públicos em uma classe (ver R0904).
+max-public-methods=20
+
+# Número máximo de instruções return/yield no corpo de uma função/método.
+max-returns=6
+
+# Número máximo de instruções no corpo de uma função/método.
+max-statements=60
+
+# Número mínimo de métodos públicos em uma classe (ver R0903).
+min-public-methods=1
+
+
+[EXCEPTIONS]
+
+# Exceções que irão emitir um aviso quando forem capturadas.
+overgeneral-exceptions=builtins.BaseException,builtins.Exception
+
+
+[FORMAT]
+
+# Formato esperado para final de linha, por exemplo: vazio (qualquer), LF ou CRLF.
+expected-line-ending-format=
+
+# Expressão regular para linhas que podem ultrapassar o limite de caracteres.
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+
+# Número de espaços de indentação exigido em uma linha quebrada ou continuada.
+indent-after-paren=4
+
+# String usada como unidade de indentação. Normalmente "    " (4 espaços) ou "\t" (1 tab).
+indent-string='    '
+
+# Número máximo de caracteres em uma única linha.
+max-line-length=88
+
+# Número máximo de linhas em um módulo.
+max-module-lines=1200
+
+# Permitir que o corpo de uma classe esteja na mesma linha da declaração se contiver apenas uma instrução.
+single-line-class-stmt=no
+
+# Permitir que o corpo de um if esteja na mesma linha do teste se não houver else.
+single-line-if-stmt=no
+
+
+[IMPORTS]
+
+# Lista de módulos que podem ser importados em qualquer nível, não apenas no nível superior.
+allow-any-import-level=
+
+# Permitir reexportações explícitas por alias a partir do __init__ de um pacote.
+# allow-reexport-from-package=
+
+# Permitir importações com wildcard (ex.: from módulo import *) se o módulo definir __all__.
+allow-wildcard-with-all=no
+
+# Módulos obsoletos que não devem ser utilizados, separados por vírgula.
+deprecated-modules=
+
+# Gera um gráfico (.gv ou outro formato de imagem suportado) das dependências externas
+# para o arquivo especificado (o relatório RP0402 não deve estar desativado).
+ext-import-graph=
+
+# Gera um gráfico (.gv ou outro formato de imagem suportado) de todas as dependências
+# (internas e externas) para o arquivo especificado (o relatório RP0402 não deve estar desativado).
+import-graph=
+
+# Gera um gráfico (.gv ou outro formato de imagem suportado) das dependências internas
+# para o arquivo especificado (o relatório RP0402 não deve estar desativado).
+int-import-graph=
+
+# Força a ordem de importação a reconhecer um módulo como parte das bibliotecas padrão.
+known-standard-library=
+
+# Força a ordem de importação a reconhecer um módulo como parte de uma biblioteca de terceiros.
+known-third-party=enchant
+
+# Pares de módulos e módulos preferenciais, separados por vírgula.
+preferred-modules=
+
+
+[LOGGING]
+
+# O tipo de formatação de string que os métodos de logging utilizam.
+# 'old' significa usar formatação com %, 'new' é para formatação com {}.
+logging-format-style=new
+
+# Módulos de logging a serem verificados para garantir que os argumentos de
+# formatação estejam no formato correto dos parâmetros da função de logging.
+logging-modules=logging
+
+
+[MESSAGES CONTROL]
+
+# Exibir apenas avisos com os níveis de confiança listados. Deixe vazio para
+# exibir todos. Níveis válidos: HIGH, CONTROL_FLOW, INFERENCE, INFERENCE_FAILURE, UNDEFINED.
+confidence=HIGH,
+           CONTROL_FLOW,
+           INFERENCE,
+           INFERENCE_FAILURE,
+           UNDEFINED
+
+# Desativa mensagens, relatórios, categorias ou verificadores com os IDs fornecidos.
+# Pode usar múltiplos identificadores separados por vírgula. Também é possível usar
+# "--disable=all" para desativar tudo e depois reativar verificações específicas.
+disable=raw-checker-failed,
+        bad-inline-option,
+        locally-disabled,
+        file-ignored,
+        suppressed-message,
+        useless-suppression,
+        deprecated-pragma,
+        use-symbolic-message-instead,
+        c-extension-no-member,missing-docstring,invalid-name
+
+# Ativa mensagens, relatórios, categorias ou verificadores com os IDs fornecidos.
+# Pode usar múltiplos identificadores separados por vírgula.
+enable=design,classes,similarities
+
+
+[METHOD_ARGS]
+
+# Lista de nomes qualificados (ex.: biblioteca.método) que exigem um parâmetro de timeout.
+# Exemplo: 'requests.api.get,requests.api.post'
+# timeout-methods=requests.api.delete,requests.api.get,requests.api.head,requests.api.options,requests.api.patch,requests.api.post,requests.api.put,requests.api.request
+
+
+[MISCELLANEOUS]
+
+# Lista de tags de anotação a serem consideradas, separadas por vírgula.
+notes=FIXME,
+      XXX,
+      TODO
+
+# Expressão regular para tags de anotação a serem consideradas.
+notes-rgx=
+
+
+[REFACTORING]
+
+# Número máximo de blocos aninhados no corpo de uma função/método.
+max-nested-blocks=5
+
+# Nome completo de funções que nunca retornam. Ao verificar por retornos inconsistentes,
+# se uma dessas funções for chamada, será considerada como um retorno explícito.
+never-returning-functions=sys.exit,argparse.parse_error
+
+# Permitir que o aviso 'consider-using-join' seja emitido quando o separador usado no join
+# for não vazio (exemplo de correção esperada: "- " + " - ".join(items))
+# suggest-join-with-non-empty-separator=
+
+
+[REPORTS]
+
+# Expressão Python que deve retornar uma pontuação menor ou igual a 10.
+# Você tem acesso às variáveis 'fatal', 'error', 'warning', 'refactor',
+# 'convention' e 'info', que contêm o número de mensagens em cada categoria,
+# além de 'statement', que é o total de instruções analisadas.
+# Essa pontuação é usada no relatório de avaliação global (RP0004).
+evaluation=max(0, 0 if fatal else 10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10))
+
+# Template usado para exibir mensagens. É uma string de formatação estilo Python.
+msg-template=
+
+# Define o formato de saída. Os formatos disponíveis são: 'text', 'parseable',
+# 'colorized', 'json2', 'json', 'msvs' (Visual Studio) e 'github' (GitHub Actions).
+# Também é possível usar uma classe personalizada de relatório.
+output-format=colorized
+
+# Define se deve exibir o relatório completo ou apenas as mensagens.
+reports=no
+
+# Ativa a pontuação de avaliação.
+score=yes
+
+
+[SIMILARITIES]
+
+# Comentários são removidos do cálculo de similaridade.
+ignore-comments=yes
+
+# Docstrings são removidas do cálculo de similaridade.
+ignore-docstrings=yes
+
+# Importações são removidas do cálculo de similaridade.
+ignore-imports=yes
+
+# Assinaturas de funções são removidas do cálculo de similaridade.
+ignore-signatures=yes
+
+# Número mínimo de linhas para considerar como similaridade.
+min-similarity-lines=4
+
+
+[SPELLING]
+
+# Limita o número de sugestões emitidas para erros ortográficos.
+max-spelling-suggestions=10
+
+# Nome do dicionário de ortografia. Nenhum dicionário disponível:
+# é necessário instalar o pacote Python e a dependência do sistema para que o enchant funcione.
+spelling-dict=
+
+# Lista de palavras separadas por vírgula que devem ser consideradas diretivas
+# se aparecerem no início de um comentário e não devem ser verificadas.
+spelling-ignore-comment-directives=fmt: on,fmt: off,noqa:,noqa,nosec,isort:skip,mypy:
+
+# Lista de palavras separadas por vírgula que não devem ser verificadas.
+spelling-ignore-words=
+
+# Caminho para um arquivo que contém o dicionário privado; uma palavra por linha.
+spelling-private-dict-file=
+
+# Indica se palavras desconhecidas devem ser armazenadas no dicionário privado
+# em vez de gerar uma mensagem.
+spelling-store-unknown-words=no
+
+
+
+[STRING]
+
+# Controla se 'inconsistent-quotes' gera um aviso quando o delimitador de aspas
+# é usado de forma inconsistente num módulo.
+check-quote-consistency=yes
+
+# Controla se 'implicit-str-concat' deve gerar um aviso sobre concatenação
+# implícita de strings em sequências definidas em várias linhas.
+check-str-concat-over-line-jumps=no
+
+
+
+[TYPECHECK]
+
+# Lista de decoradores que produzem context managers, como contextlib.contextmanager.
+# Adicione outros decoradores personalizados que também criam context managers válidos.
+contextmanager-decorators=contextlib.contextmanager
+
+# Lista de membros definidos dinamicamente e ignorados pelo sistema de inferência do Pylint.
+# Não devem gerar erro E1101 ao serem acessados. Aceita expressões regulares.
+generated-members=flask.*,request.*,session.*,g.*,current_app.*,
+                  django.*,objects.*,DoesNotExist.*,MultipleObjectsReturned.*,
+                  fastapi.*,Depends.*,Query.*,Path.*,Body.*,Header.*,Cookie.*,
+                  sqlalchemy.*,rest_framework.*,fastapi_users.*
+
+# Define se deve emitir alerta quando o dono do atributo for inferido como None.
+ignore-none=yes
+
+# Define se o Pylint deve emitir alertas como no-member mesmo quando a inferência for parcial.
+ignore-on-opaque-inference=yes
+
+# Lista de mensagens simbólicas a ignorar para membros de Mixins.
+ignored-checks-for-mixins=no-member,
+                          not-async-context-manager,
+                          not-context-manager,
+                          attribute-defined-outside-init
+
+# Lista de nomes de classes cujos atributos não devem ser verificados.
+# Útil para classes com atributos definidos dinamicamente.
+ignored-classes=optparse.Values,thread._local,_thread._local,argparse.Namespace,beartype
+
+# Exibe sugestões de nomes semelhantes quando um membro não é encontrado.
+missing-member-hint=yes
+
+# Distância máxima de edição para considerar um nome como sugestão válida.
+missing-member-hint-distance=1
+
+# Número máximo de sugestões de nomes semelhantes a serem exibidas.
+missing-member-max-choices=1
+
+# Expressão regular que define quais classes são consideradas Mixins.
+mixin-class-rgx=.*[Mm]ixin
+
+# Lista de decoradores que alteram a assinatura de uma função decorada.
+signature-mutators=retry.retry,wrapt.decorator
+
+
+
+[VARIABLES]
+
+# Lista de nomes adicionais que devem ser considerados como definidos em builtins.
+# Evite definir novos builtins sempre que possível.
+additional-builtins=
+
+# Define se variáveis globais não utilizadas devem ser tratadas como violação.
+allow-global-unused-variables=yes
+
+# Lista de nomes permitidos para sobrescrever builtins.
+allowed-redefined-builtins=no
+
+# Lista de strings que identificam funções de callback pelo nome.
+# O nome da função deve começar ou terminar com uma dessas strings.
+callbacks=cb_,
+          _cb
+
+# Expressão regular que identifica variáveis "dummy" (esperadas para não serem usadas).
+dummy-variables-rgx=_+$|(_[a-zA-Z0-9_]*[a-zA-Z0-9]+?$)|dummy|^ignored_|^unused_
+
+# Nomes de argumentos que correspondem a essa expressão serão ignorados.
+ignored-argument-names=_.*|^ignored_|^unused_
+
+# Define se devemos verificar por importações não utilizadas em arquivos __init__.
+init-import=no
+
+# Lista de nomes qualificados de módulos que podem conter objetos que sobrescrevem builtins.
+redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io

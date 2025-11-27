@@ -1,0 +1,62 @@
+repos:
+  - repo: local
+    hooks:
+      - id: isort
+        name: "ISORT: Automatic import organization"
+        entry: isort
+        language: system
+        types: [python]
+
+      - id: black
+        name: "BLACK: Automatic Python code formatting"
+        entry: black
+        language: system
+        types: [python]
+        args: [--config=pyproject.toml]
+
+      - id: mypy
+        name: "MY-PY: Static type checking"
+        entry: mypy
+        language: system
+        types: [python]
+        args: [--config-file=pyproject.toml, "--ignore-missing-imports"]
+
+      - id: bandit
+        name: "BANDIT: Security analysis for Python code"
+        entry: bandit
+        language: system
+        types: [python]
+        args: [--configfile=pyproject.toml]
+
+      - id: flake8
+        name: "FLAKE8: Style and best practice checks"
+        entry: flake8
+        language: system
+        types: [python]
+        args: [--config=.flake8]
+
+      - id: pylint
+        name: "PYLINT: Code quality and standards analysis"
+        entry: pylint
+        language: system
+        types: [python]
+        args: [--rcfile=.pylintrc, --ignore-patterns=.*beartype.*]
+        require_serial: true
+
+      - id: run-tests
+        name: "UNITTEST: Run tests with coverage"
+        entry: python
+        language: system
+        pass_filenames: false
+        always_run: true
+        types: [python]
+        args:
+          - -c
+          - |
+            import subprocess, sys
+            print("Running tests with coverage...")
+            subprocess.call(["coverage", "erase"])
+            if subprocess.call(["coverage", "run", "--branch", "-m", "unittest", "discover", "-s", "tests"]) != 0:
+                sys.exit(1)
+            if subprocess.call(["coverage", "report", "--fail-under=100"]) != 0:
+                sys.exit(1)

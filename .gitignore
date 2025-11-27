@@ -1,0 +1,55 @@
+# Files
+__pycache__
+Thumbs.db
+notes.txt
+
+# Extensions
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.secret
+*.secrets
+*.log
+*.xlsx
+*.pdf
+*.sublime-project
+*.sublime-workspace
+*.egg-info
+*.sublime-project
+*.sublime-workspace
+
+# Folders
+ENV/
+VENV/
+env/
+venv/
+logs/
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Hidden
+.pytest_cache/
+.idea/
+.cache/
+.tox/
+.DS_Store
+.mypy_cache
+./config/.env
+.ipynb_checkpoints/
+
+# Coverage
+.coverage
+nosetests.xml
+coverage.xml
+coverage.json
+htmlcov/
+.cache/
+.coverage
+.tox/
+*.py.cover
+*.py,cover

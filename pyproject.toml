@@ -1,0 +1,31 @@
+[tool.black]
+line-length = 88
+target-version = ["py314"]
+exclude = "env|logs|image|.vscode|htmlcov|docs|.github|javascript"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+skip = ["env"]
+skip_glob = ["env/*", "logs/*", ".vscode/*", "image/*", ".vscode/*", "docs/*", ".github/*", "javascript/*"]
+
+[tool.bandit]
+skips = ["B101"]
+exclude_dirs = ["tests", "env", "logs", ".vscode", "image", ".vscode", "docs", ".github", "javascript"]
+
+[tool.mypy]
+python_version = "3.14"
+ignore_missing_imports = true
+strict = true
+exclude = '^(env|logs|.vscode|image|htmlcov|docs|.github|javascript)/'
+disable_error_code = ["union-attr", "attr-defined", "misc"]
+
+[tool.coverage.report]
+exclude_also = [
+    "if __name__ == .__main__.:",
+]
+
+[tool.coverage.run]
+omit = [
+    "*/__init__.py"
+]
