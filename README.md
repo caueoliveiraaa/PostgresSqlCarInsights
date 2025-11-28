@@ -18,6 +18,9 @@
 
 ## About the project
 
+This is a learning‑focused project designed to practice SQL and Python integration.</br>
+The goal is to build a complete workflow that combines database design, query execution, and interactive analysis in the terminal.
+
 ## Getting Started (Quick Local Setup)
 
 ### 1 - Virtual environment
