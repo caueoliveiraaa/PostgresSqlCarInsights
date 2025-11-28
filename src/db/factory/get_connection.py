@@ -10,6 +10,8 @@ from beartype import beartype
 from beartype.typing import Optional
 
 from configs.db_info import (
+    CAR_DATA_ANALYSIS_DB,
+    POSTGRES_DB,
     POSTGRES_HOST,
     POSTGRES_PASSWORD,
     POSTGRES_PORT,
@@ -33,25 +35,24 @@ def fabricate_connection(database_name: str) -> DbConnection:
         ValueError: If the given `database_name` is not recognized.
     """
     connection_info: Optional[ConnectionInfo] = None
-    match str(database_name).lower():
-        case "postgres_car_data_analysis":
-            connection_info = ConnectionInfo(
-                dbname="postgres_car_data_analysis",
-                user=POSTGRES_USER,
-                password=POSTGRES_PASSWORD,
-                host=POSTGRES_HOST,
-                port=POSTGRES_PORT,
-            )
-        case "postgres":
-            connection_info = ConnectionInfo(
-                dbname="postgres",
-                user=POSTGRES_USER,
-                password=POSTGRES_PASSWORD,
-                host=POSTGRES_HOST,
-                port=POSTGRES_PORT,
-            )
-        case _:
-            raise ValueError(f"There are no settings for {database_name}.")
+    if database_name == CAR_DATA_ANALYSIS_DB:
+        connection_info = ConnectionInfo(
+            dbname=CAR_DATA_ANALYSIS_DB,
+            user=POSTGRES_USER,
+            password=POSTGRES_PASSWORD,
+            host=POSTGRES_HOST,
+            port=POSTGRES_PORT,
+        )
+    elif database_name == POSTGRES_DB:
+        connection_info = ConnectionInfo(
+            dbname=POSTGRES_DB,
+            user=POSTGRES_USER,
+            password=POSTGRES_PASSWORD,
+            host=POSTGRES_HOST,
+            port=POSTGRES_PORT,
+        )
+    else:
+        raise ValueError(f"There are no settings for {database_name}.")
 
     connection: DbConnection = DbConnection(connection_info)
     connection.create_cursor()

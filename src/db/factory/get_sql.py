@@ -5,14 +5,18 @@ SQL file located under the configured `PATH_SQL_SETUP` and returns the
 script as a string.
 """
 
-from configs.paths import PATH_SQL_SETUP
+from beartype import beartype
+
+from configs.paths import PATH_SQL_QUERIES, PATH_SQL_SETUP
 
 
-def get_content_sql_file(file_name: str) -> str:
+@beartype
+def get_content_sql_file(file_name: str, setup: bool = True) -> str:
     """Returns the contents of a SQL file in the SQL setup directory.
 
     Args:
         file_name: Name of the SQL file to read.
+        setup: If it has to get the sql from the setup folder.
 
     Returns:
         str: The textual SQL script read from disk.
@@ -27,7 +31,9 @@ def get_content_sql_file(file_name: str) -> str:
         file_name = f"{file_name}.sql"
 
     sql_script: str = ""
-    with open(f"{PATH_SQL_SETUP}{file_name}", "r") as file:
+    folder_path: str = PATH_SQL_SETUP if setup else PATH_SQL_QUERIES
+
+    with open(f"{folder_path}{file_name}", "r") as file:
         sql_script = file.read()
 
     if not sql_script:
