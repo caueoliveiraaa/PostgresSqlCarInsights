@@ -29,64 +29,64 @@ jobs:
           pip install -r requirements.txt
           pip install -e .
 
-  # validate:
-  #   needs: build
-  #   runs-on: windows-latest
+  validate:
+    needs: build
+    runs-on: windows-latest
 
-  #   steps:
-  #     - *checkout
-  #     - *setup-python
-  #     - *install-deps
+    steps:
+      - *checkout
+      - *setup-python
+      - *install-deps
 
-  #     - name: Check formatting with Black
-  #       run: black --check . --config pyproject.toml
+      - name: Check formatting with Black
+        run: black --check . --config pyproject.toml
 
-  #     - name: PEP8 style check with Flake8
-  #       run: flake8 . --config=.flake8
+      - name: PEP8 style check with Flake8
+        run: flake8 . --config=.flake8
 
-  #     - name: Check import order with Isort
-  #       run: isort --check-only . --settings-path=pyproject.toml
+      - name: Check import order with Isort
+        run: isort --check-only . --settings-path=pyproject.toml
 
-  #     - name: Clear cache - MyPy
-  #       run: |
-  #         if (Test-Path ".mypy_cache") {
-  #           Remove-Item -Recurse -Force ".mypy_cache"
-  #         }
+      - name: Clear cache - MyPy
+        run: |
+          if (Test-Path ".mypy_cache") {
+            Remove-Item -Recurse -Force ".mypy_cache"
+          }
 
-  #     - name: Clear cache - Bandit
-  #       run: |
-  #         $banditPath = "$env:USERPROFILE\.cache\bandit"
-  #         if (Test-Path $banditPath) {
-  #           Remove-Item -Recurse -Force $banditPath
-  #         }
+      - name: Clear cache - Bandit
+        run: |
+          $banditPath = "$env:USERPROFILE\.cache\bandit"
+          if (Test-Path $banditPath) {
+            Remove-Item -Recurse -Force $banditPath
+          }
 
-  #     - name: Clear cache - Pylint
-  #       run: |
-  #         if (Test-Path ".pylint.d") {
-  #           Remove-Item -Recurse -Force ".pylint.d"
-  #         }
+      - name: Clear cache - Pylint
+        run: |
+          if (Test-Path ".pylint.d") {
+            Remove-Item -Recurse -Force ".pylint.d"
+          }
 
-  #     - name: Static typing check with MyPy
-  #       run: mypy . --config-file pyproject.toml
+      - name: Static typing check with MyPy
+        run: mypy . --config-file pyproject.toml
 
-  #     - name: Code quality analysis with Pylint
-  #       run: pylint . --rcfile=.pylintrc
+      - name: Code quality analysis with Pylint
+        run: pylint . --rcfile=.pylintrc
 
-  #     - name: Security analysis with Bandit
-  #       run: bandit -r . --configfile pyproject.toml
+      - name: Security analysis with Bandit
+        run: bandit -r . --configfile pyproject.toml
 
-  # test:
-  #   needs: 
-  #     - build
-  #     - validate
-  #   runs-on: windows-latest
+  test:
+    needs: 
+      - build
+      - validate
+    runs-on: windows-latest
 
-  #   steps:
-  #     - *checkout
-  #     - *setup-python
-  #     - *install-deps
+    steps:
+      - *checkout
+      - *setup-python
+      - *install-deps
 
-  #     - name: Run tests with coverage
-  #       run: |
-  #         coverage run --branch -m unittest discover -s tests
-  #         coverage report --fail-under=100
+      - name: Run tests with coverage
+        run: |
+          coverage run --branch -m unittest discover -s tests
+          coverage report --fail-under=100
