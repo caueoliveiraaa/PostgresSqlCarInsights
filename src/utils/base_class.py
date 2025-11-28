@@ -17,7 +17,7 @@ class BaseClass:
     """Simple base class to provide a configured `logging.Logger`.
 
     `BaseClass` creates and stores a `logging.Logger` instance using
-    :ProjectLogger`. Subclasses may reference ``self._logger`` to log
+    `ProjectLogger`. Subclasses may reference `self._logger` to log
     messages according to the application's centralized logging configuration.
     """
 
