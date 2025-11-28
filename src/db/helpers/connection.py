@@ -49,9 +49,10 @@ class DbConnection(BaseClass):
                 host=self.host,
                 port=self.port,
             )
-            self._connection.autocommit = True
 
+            self._connection.autocommit = True
             self._logger.info("Connection created successfully.")
+
         except Error as e:
             self._logger.critical(f"Psycopg2 error: {e}")
             raise
@@ -68,6 +69,7 @@ class DbConnection(BaseClass):
 
             self.cursor = self._connection.cursor()
             self._logger.info("Cursor created successfully.")
+
         except Error as e:
             self._logger.critical(f"Psycopg2 error: {e}")
             raise
@@ -89,6 +91,7 @@ class DbConnection(BaseClass):
                 self._connection.close()
 
             self._logger.info("Connections closed successfully.")
+
         except Error as e:
             self._logger.critical(f"Psycopg2 error when closing connection: {e}")
             raise
