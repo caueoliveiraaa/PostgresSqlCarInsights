@@ -5,7 +5,6 @@ import sys
 from unittest import TestCase
 from unittest.mock import patch
 
-import pandas as pd
 from beartype.typing import Any, Dict, Optional
 
 
@@ -43,9 +42,6 @@ class BaseTestCase(TestCase):
             "traceback": patch("traceback.print_exception", return_value=None),
             "sleep": patch("time.sleep", return_value=None),
             "logger": patch("logging.Logger._log", return_value=None),
-            "df_head": patch.object(pd.DataFrame, "head", return_value=pd.DataFrame()),
-            "df_tail": patch.object(pd.DataFrame, "tail", return_value=pd.DataFrame()),
-            "df_info": patch.object(pd.DataFrame, "info", return_value=None),
         }
 
         cls._mocks = {name: patcher.start() for name, patcher in cls._patchers.items()}
