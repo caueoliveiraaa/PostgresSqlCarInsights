@@ -8,5 +8,6 @@
   },
   "isort.args": ["--profile", "black"],
   "pylint.enabled": true,
-  "python.analysis.typeCheckingMode": "off"
+  "python.analysis.typeCheckingMode": "off",
+  "black-formatter.args": ["--target-version", "py313"]
 }
