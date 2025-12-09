@@ -2,7 +2,7 @@
 
 from dotenv import load_dotenv
 
-from src.utils.generic_methods import get_env_value
+from src.utils.env_validation import get_env_value
 
 load_dotenv()
 
@@ -12,4 +12,4 @@ POSTGRES_HOST: str = get_env_value("POSTGRES_HOST", mandatory=True)
 POSTGRES_PORT: str = get_env_value("POSTGRES_PORT", mandatory=True)
 
 POSTGRES_DB: str = "postgres"
-CAR_DATA_ANALYSIS_DB: str = "postgres_car_data_analysis"
+CAR_DB: str = "postgres_car_data_analysis"

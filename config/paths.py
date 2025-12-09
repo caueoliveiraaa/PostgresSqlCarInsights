@@ -12,6 +12,7 @@ _PATH_DOT_ENV: str = os.path.join(_PATH_CONFIGS, ".env")
 PATH_LOGS: str = os.path.join(_PATH_ROOT, "logs\\")
 PATH_SQL_SETUP: str = os.path.join(_PATH_SQL, "setup\\")
 PATH_SQL_QUERIES: str = os.path.join(_PATH_SQL, "queries\\")
+PATH_SQL_CUSTOM: str = os.path.join(_PATH_SQL, "custom_queries\\")
 
 env_file: Path = Path(f"{_PATH_DOT_ENV}.env")
 if not env_file.exists():

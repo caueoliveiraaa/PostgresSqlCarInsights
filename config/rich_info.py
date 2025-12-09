@@ -1,4 +1,4 @@
-"""This file stores values used in `crud_menu`."""
+"""This file stores values used in 'crud_menu'."""
 
 from beartype.typing import List
 
