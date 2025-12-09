@@ -2,21 +2,14 @@
 
 from beartype import beartype
 from beartype.typing import Optional
-from psycopg2 import Error, connect
+from psycopg2 import connect
 from psycopg2.extensions import connection, cursor
 
-from src.utils.base_class import BaseClass
-from src.utils.dataclasses import ConnectionInfo
+from src.domain.connection_info import ConnectionInfo
 
 
-class DbConnection(BaseClass):
-    """Lightweight wrapper around a psycopg2 database connection.
-
-    `DbConnection` stores connection parameters and exposes methods to
-    establish a new connection, create a cursor and to safely close both the
-    cursor and the connection. All operations are logged using
-    the class `ProjectLogger`.
-    """
+class DbConnection:
+    """ """
 
     @beartype
     def __init__(self, connection_info: ConnectionInfo) -> None:
@@ -36,62 +29,28 @@ class DbConnection(BaseClass):
         self._connection: Optional[connection] = None
 
     def _create_connection(self) -> None:
-        """Opens a new database connection using psycopg2.
+        """Opens a new database connection using psycopg2."""
+        self._connection = connect(
+            dbname=self.dbname,
+            user=self.user,
+            password=self.password,
+            host=self.host,
+            port=self.port,
+        )
 
-        Raises:
-            Error: If any psycopg2 error occurs.
-        """
-        try:
-            self._connection = connect(
-                dbname=self.dbname,
-                user=self.user,
-                password=self.password,
-                host=self.host,
-                port=self.port,
-            )
-
-            self._connection.autocommit = True
-            self._logger.info("Connection created successfully.")
-
-        except Error as e:
-            self._logger.critical(f"Psycopg2 error: {e}")
-            raise
+        self._connection.autocommit = True
 
     def create_cursor(self) -> None:
-        """Creates a database cursor from an existing connection.
+        """Creates a database cursor from an existing connection."""
+        if not self._connection:
+            self._create_connection()
 
-        Raises:
-            Error: If any psycopg2 error occurs.
-        """
-        try:
-            if not self._connection:
-                self._create_connection()
-
-            self.cursor = self._connection.cursor()
-            self._logger.info("Cursor created successfully.")
-
-        except Error as e:
-            self._logger.critical(f"Psycopg2 error: {e}")
-            raise
+        self.cursor = self._connection.cursor()
 
     def close_cursor_and_connection(self) -> None:
-        """Closes cursor and connection, logging any errors encountered.
+        """Closes cursor and connection."""
+        if self.cursor:
+            self.cursor.close()
 
-        Raises:
-            Error: If any psycopg2 error occurs while closing connections.
-        """
-        try:
-            try:
-                if self.cursor:
-                    self.cursor.close()
-            except Error as e:
-                self._logger.error(f"Psycopg2 error when closing cursor: {e}")
-
-            if self._connection:
-                self._connection.close()
-
-            self._logger.info("Connections closed successfully.")
-
-        except Error as e:
-            self._logger.critical(f"Psycopg2 error when closing connection: {e}")
-            raise
+        if self._connection:
+            self._connection.close()
