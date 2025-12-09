@@ -191,3 +191,27 @@ class RichPrinter(IRichPrinter):
 
         syntax = Syntax(code, language, theme=theme, line_numbers=True)
         self._console.print(Align.left(syntax))
+
+    @beartype
+    def get_input(
+        self, text: str, color: str = "bright_green", style: str = "bold"
+    ) -> str:
+        """Read input from user via terminal.
+
+        Args:
+            text: Text for the prompt.
+            color: The color of the text.
+            style: The style being applied to the text.
+
+        Returns:
+            Text: The choice that has been input.
+
+        Raises:
+            ValueError: In case the style or the color are not valid.
+        """
+        self.print_rich(
+            Panel.fit(self._prepare_text("Enter your choice below", color, style))
+        )
+
+        choice: str = input(">>> ")
+        return choice
