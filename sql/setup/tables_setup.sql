@@ -1,3 +1,14 @@
+-- Creates table Dealer
+CREATE TABLE Dealer (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(200),
+    city VARCHAR(100),
+    state VARCHAR(50),
+    phone VARCHAR(20),
+    email VARCHAR(100)
+);
+
 -- Creates table Car
 CREATE TABLE Car (
     id SERIAL PRIMARY KEY,
@@ -19,17 +30,6 @@ CREATE TABLE Sale (
     sale_date DATE DEFAULT CURRENT_DATE,
     sale_price NUMERIC(12,2) NOT NULL,
     payment_method VARCHAR(30)
-);
-
--- Creates table Dealer
-CREATE TABLE Dealer (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    address VARCHAR(200),
-    city VARCHAR(100),
-    state VARCHAR(50),
-    phone VARCHAR(20),
-    email VARCHAR(100)
 );
 
 -- Creates table CarInfo
