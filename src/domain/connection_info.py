@@ -1,4 +1,4 @@
-"""Hosts all the dataclasses used by the project."""
+"""Hosts dataclasses used for database connections."""
 
 from dataclasses import dataclass
 
