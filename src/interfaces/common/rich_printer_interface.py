@@ -122,7 +122,7 @@ class IRichPrinter(ABC):
 
     @abstractmethod
     def print_code(
-        self, code: str, language: str = "python", theme: str = "dracula"
+        self, code: str, language: str = "sql", theme: str = "dracula"
     ) -> None:
         """Print highlighted source code.
 
@@ -136,4 +136,22 @@ class IRichPrinter(ABC):
 
         Raises:
             ValueError: If the provided 'code', 'theme' or 'language' are not valid.
+        """
+
+    @abstractmethod
+    def get_input(
+        self, text: str, color: str = "bright_green", style: str = "bold"
+    ) -> str:
+        """Read input from user via terminal.
+
+        Args:
+            text: Text for the prompt.
+            color: The color of the text.
+            style: The style being applied to the text.
+
+        Returns:
+            Text: The choice that has been input.
+
+        Raises:
+            ValueError: In case the style or the color are not valid.
         """

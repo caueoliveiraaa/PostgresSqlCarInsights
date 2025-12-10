@@ -168,14 +168,15 @@ class RichPrinter(IRichPrinter):
 
     @beartype
     def print_code(
-        self, code: str, language: str = "python", theme: str = "dracula"
+        self, code: str, language: str = "sql", theme: str = "dracula"
     ) -> None:
         """Print highlighted source code.
 
         Args:
             code: The code snippet to highlight.
             language: The programming language used for syntax highlighting.
-            theme: The theme used for syntax highlighting.
+                Default = sql.
+            theme: The theme used for syntax highlighting. Default = dracula.
 
         Raises:
             ValueError: If the provided 'code', 'theme' or 'language' are not valid.
@@ -189,8 +190,15 @@ class RichPrinter(IRichPrinter):
         if theme not in RICH_THEMES:
             raise ValueError(f"Theme {theme} is invalid.")
 
-        syntax = Syntax(code, language, theme=theme, line_numbers=True)
-        self._console.print(Align.left(syntax))
+        syntax: Syntax = Syntax(code, language, theme=theme, line_numbers=False)
+        panel: Panel = Panel(
+            Align.center(syntax),
+            title=f"[bold]{language.upper()} CODE[/bold]",
+            border_style="cyan",
+            padding=(1, 2),
+        )
+
+        self._console.print(panel)
 
     @beartype
     def get_input(
