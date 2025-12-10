@@ -16,6 +16,7 @@ from src.cli.crud_menu import CrudMenu
 from src.common.rich_printer import RichPrinter
 from src.db.db_connection import DbConnection
 from src.db.db_manager import DatabaseManager
+from src.domain.connection_info import ConnectionInfo
 from src.utils.connection_factory import get_connection_info
 from src.utils.logger_factory import get_project_logger
 
@@ -29,8 +30,9 @@ def main() -> None:
 
     Organizes the instances and calls necessary to execute the program.
     """
-    connection: DbConnection = DbConnection(get_connection_info(CAR_DB))
-    db_manager: DatabaseManager = DatabaseManager(connection)
+    connection_info: ConnectionInfo = get_connection_info(CAR_DB)
+    connection: DbConnection = DbConnection(connection_info)
+    db_manager: DatabaseManager = DatabaseManager(LOGGER, RICH, connection)
     crud: CrudMenu = CrudMenu(LOGGER, RICH, db_manager)
 
     crud.run_crud_main_menu()
