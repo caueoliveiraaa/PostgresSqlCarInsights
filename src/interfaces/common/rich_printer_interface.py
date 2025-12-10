@@ -122,17 +122,15 @@ class IRichPrinter(ABC):
 
     @abstractmethod
     def print_code(
-        self, code: str, language: str = "sql", theme: str = "dracula"
+        self, code: str, language: str = "sql", theme: str = "material"
     ) -> None:
         """Print highlighted source code.
-
-        Validate existance of 'language' and 'theme' by checking the languages and
-        themes stored in the config module.
 
         Args:
             code: The code snippet to highlight.
             language: The programming language used for syntax highlighting.
-            theme: The theme used for syntax highlighting.
+                Default = sql.
+            theme: The theme used for syntax highlighting. Default = material.
 
         Raises:
             ValueError: If the provided 'code', 'theme' or 'language' are not valid.

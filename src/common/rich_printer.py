@@ -6,6 +6,7 @@ from rich.align import Align
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
+from rich.prompt import Prompt
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.text import Text
@@ -60,13 +61,16 @@ class RichPrinter(IRichPrinter):
         return styled_text
 
     @beartype
-    def print_rich(self, object: Any) -> None:
+    def print_rich(self, object: Any, align_center: bool = True) -> None:
         """Generic method for printing different rich objects.
 
         Args:
             object: Object being printed.
         """
-        self._console.print(object)
+        if align_center:
+            self._console.print(Align.center(object))
+        else:
+            self._console.print(object)
 
     @beartype
     def print_text(self, text: str, color: str = "", style: str = "") -> None:
@@ -81,9 +85,7 @@ class RichPrinter(IRichPrinter):
             ValueError: In case the style or the color are not valid or if
                 the content of text is empty.
         """
-        self._console.print(
-            Align.left(self._prepare_text(text, color, style)), end="\n"
-        )
+        self.print_rich(self._prepare_text(text, color, style))
 
     @beartype
     def print_panel(
@@ -110,10 +112,12 @@ class RichPrinter(IRichPrinter):
                 raise ValueError(f"Color {color} is invalid.")
 
         panel = Panel(
-            Text(text, style=color) if color else text, title=title if title else None
+            Text(text, style=color) if color else text,
+            title=title if title else None,
+            expand=True,
         )
 
-        self._console.print(Align.left(panel))
+        self.print_rich(panel)
 
     @beartype
     def create_table(
@@ -134,7 +138,7 @@ class RichPrinter(IRichPrinter):
         if not columns:
             raise ValueError("Columns cannot be empty.")
 
-        table: Table = Table(show_header=True, header_style=header_style)
+        table: Table = Table(show_header=True, header_style=header_style, expand=True)
         for col in columns:
             table.add_column(str(col))
 
@@ -148,7 +152,7 @@ class RichPrinter(IRichPrinter):
             table: A Rich Table instance to be printed.
             None
         """
-        self._console.print(Align.left(table))
+        self.print_rich(table)
 
     @beartype
     def print_markdown(self, md_text: str) -> None:
@@ -164,11 +168,11 @@ class RichPrinter(IRichPrinter):
             raise ValueError("Markdown text cannot be empty.")
 
         mark_down: Markdown = Markdown(md_text)
-        self._console.print(Align.left(mark_down))
+        self.print_rich(mark_down)
 
     @beartype
     def print_code(
-        self, code: str, language: str = "sql", theme: str = "dracula"
+        self, code: str, language: str = "sql", theme: str = "material"
     ) -> None:
         """Print highlighted source code.
 
@@ -176,7 +180,7 @@ class RichPrinter(IRichPrinter):
             code: The code snippet to highlight.
             language: The programming language used for syntax highlighting.
                 Default = sql.
-            theme: The theme used for syntax highlighting. Default = dracula.
+            theme: The theme used for syntax highlighting. Default = material.
 
         Raises:
             ValueError: If the provided 'code', 'theme' or 'language' are not valid.
@@ -194,11 +198,12 @@ class RichPrinter(IRichPrinter):
         panel: Panel = Panel(
             Align.center(syntax),
             title=f"[bold]{language.upper()} CODE[/bold]",
-            border_style="cyan",
+            border_style="purple3",
             padding=(1, 2),
+            expand=True,
         )
 
-        self._console.print(panel)
+        self.print_rich(panel)
 
     @beartype
     def get_input(
@@ -217,9 +222,9 @@ class RichPrinter(IRichPrinter):
         Raises:
             ValueError: In case the style or the color are not valid.
         """
-        self.print_rich(
-            Panel.fit(self._prepare_text("Enter your choice below", color, style))
-        )
+        self.print_rich(Panel(self._prepare_text(text, color, style), expand=True))
+        terminal_width: int = self._console.width
+        prompt: str = "Input"
+        padding: int = (terminal_width - len(prompt)) // 2
 
-        choice: str = input(">>> ")
-        return choice
+        return Prompt.ask(" " * padding + prompt)
