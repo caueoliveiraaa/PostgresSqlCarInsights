@@ -45,7 +45,7 @@ def general_cli_error_handler(
             return method(self, *args, **kwargs)
 
         except (OSError, ModuleNotFoundError) as e:
-            self._logger.error(f"[Operational Error] {method.__name__}: {e}")
+            self._logger.error(f"[{e.__class__.__name__}] {method.__name__}: {e}")
             self._rich.print_panel(
                 "An operational error occurred while processing your request.\n"
                 "Please check the logs for more details.",
@@ -55,7 +55,7 @@ def general_cli_error_handler(
             return None
 
         except (ValueError, TypeError) as e:
-            self._logger.error(f"[Data Error] {method.__name__}: {e}")
+            self._logger.error(f"[{e.__class__.__name__}] {method.__name__}: {e}")
             self._rich.print_panel(
                 "An error occurred while processing data.\n"
                 "Please check the logs for more details.",
@@ -65,7 +65,7 @@ def general_cli_error_handler(
             return None
 
         except (KeyError, AttributeError) as e:
-            self._logger.error(f"[Data Access Error] {method.__name__}: {e}")
+            self._logger.error(f"[{e.__class__.__name__}] {method.__name__}: {e}")
             self._rich.print_panel(
                 "An error occurred while trying to access data.\n"
                 "Please check the logs for more details.",
@@ -75,9 +75,9 @@ def general_cli_error_handler(
             return None
 
         except (ConsoleError, StyleError) as e:
-            self._logger.error(f"[Rich Console Error] {method.__name__}: {e}")
+            self._logger.error(f"[{e.__class__.__name__}] {method.__name__}: {e}")
             self._rich.print_panel(
-                "A console rendering error occurred while using Rich.\n"
+                "A console rendering error occurred.\n"
                 "Please check the logs for technical details.",
                 title="RICH ERROR",
                 color="red",
@@ -139,7 +139,7 @@ def db_error_handler(method: Callable[..., Any]) -> Callable[..., Optional[Any]]
                     color="red",
                 )
             else:
-                self._logger.error(f"[DatabaseError Error] {method.__name__}: {e}")
+                self._logger.error(f"[{e.__class__.__name__}] {method.__name__}: {e}")
                 self._rich.print_panel(
                     "A database error occurred while processing your request.\n"
                     "Please check the logs for more details.",
