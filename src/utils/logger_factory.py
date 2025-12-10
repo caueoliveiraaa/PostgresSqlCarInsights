@@ -41,7 +41,7 @@ def _set_handlers(logs_path: str, logger: Logger) -> None:
     if not logger.handlers:
         logger.setLevel(level=DEBUG)
 
-        logger_formatter: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        logger_formatter: str = "%(asctime)s - %(levelname)s - %(message)s"
         file_handler: FileHandler = FileHandler(logs_path)
         formatter: Formatter = Formatter(logger_formatter)
 
