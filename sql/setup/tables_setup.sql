@@ -1,6 +1,6 @@
--- Creates table Dealer
-CREATE TABLE Dealer (
-    id SERIAL PRIMARY KEY,
+-- Create table Dealer
+CREATE TABLE IF NOT EXISTS Dealer (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(200),
     city VARCHAR(100),
@@ -9,9 +9,9 @@ CREATE TABLE Dealer (
     email VARCHAR(100)
 );
 
--- Creates table Car
-CREATE TABLE Car (
-    id SERIAL PRIMARY KEY,
+-- Create table Car
+CREATE TABLE IF NOT EXISTS Car (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     brand VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     year INT NOT NULL,
@@ -20,9 +20,18 @@ CREATE TABLE Car (
     dealer_id INT REFERENCES Dealer(id)
 );
 
--- Creates table Sale
-CREATE TABLE Sale (
-    id SERIAL PRIMARY KEY,
+-- Create table CarInfo
+CREATE TABLE IF NOT EXISTS CarInfo (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    car_id INT REFERENCES Car(id) ON DELETE CASCADE,
+    mpg INT,
+    fuel_type VARCHAR(20),
+    features TEXT
+);
+
+-- Create table Sale
+CREATE TABLE IF NOT EXISTS Sale (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     car_id INT REFERENCES Car(id) ON DELETE CASCADE,
     dealer_id INT REFERENCES Dealer(id),
     customer_name VARCHAR(100) NOT NULL,
@@ -30,13 +39,4 @@ CREATE TABLE Sale (
     sale_date DATE DEFAULT CURRENT_DATE,
     sale_price NUMERIC(12,2) NOT NULL,
     payment_method VARCHAR(30)
-);
-
--- Creates table CarInfo
-CREATE TABLE CarInfo (
-    id SERIAL PRIMARY KEY,
-    car_id INT REFERENCES Car(id) ON DELETE CASCADE,
-    mpg INT,
-    fuel_type VARCHAR(20),
-    features TEXT
 );

@@ -1,12 +1,11 @@
--- Drops table CarInfo
+-- Drop table CarInfo
 DROP TABLE CarInfo;
 
--- Drops table Sale
+-- Drop table Sale
 DROP TABLE Sale;
 
--- Drops table Car
+-- Drop table Car
 DROP TABLE Car;
 
--- Drops table Dealer
+-- Drop table Dealer
 DROP TABLE Dealer;
-
