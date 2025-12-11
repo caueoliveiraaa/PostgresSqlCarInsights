@@ -1,6 +1,7 @@
 """Error handling decorator for consistent logging and styled console output."""
 
 from functools import wraps
+from sys import exit as sys_exit
 from typing import Callable
 
 from beartype.typing import Any, Optional
@@ -86,12 +87,16 @@ def general_cli_error_handler(
 
         except (KeyboardInterrupt, EOFError):
             print("\n")
-            self._rich.print_panel(
-                "Program interrupted by user.\nExiting gracefully...",
-                title="EXIT",
-                color="yellow",
-            )
-            exit()
+            try:
+                self._rich.print_panel(
+                    "Program interrupted by user.\nExiting gracefully...",
+                    title="EXIT",
+                    color="yellow",
+                )
+            except KeyboardInterrupt:
+                print("Program interrupted by user. Exiting gracefully...")
+
+            sys_exit(0)
 
     return wrapper
 
