@@ -3,8 +3,6 @@
 This module can contain a CLI orchestration logic. When executed it should configure
 logging, set up any required resources and delegate control flow to submodules that
 run analysis and reporting tasks via terminal.
-
-The 'LOGGER' and 'RICH' constants operate as a Singletons for the project.
 """
 
 from logging import Logger
@@ -32,7 +30,7 @@ def main() -> None:
     """
     connection_info: ConnectionInfo = get_connection_info(CAR_DB)
     connection: DbConnection = DbConnection(connection_info)
-    db_manager: DatabaseManager = DatabaseManager(LOGGER, RICH, connection)
+    db_manager: DatabaseManager = DatabaseManager(RICH, connection)
     crud: CrudMenu = CrudMenu(LOGGER, RICH, db_manager)
 
     crud.run_crud_main_menu()
