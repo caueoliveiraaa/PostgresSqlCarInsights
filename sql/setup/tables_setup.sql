@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS Car (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     brand VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
-    year INT NOT NULL,
+    year INT NOT NULL CHECK (year >= 1886),
     color VARCHAR(30),
-    price NUMERIC(12,2) NOT NULL,
+    price NUMERIC(12,2) NOT NULL CHECK (price > 0),
     dealer_id INT REFERENCES Dealer(id)
 );
 
@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS Car (
 CREATE TABLE IF NOT EXISTS CarInfo (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     car_id INT REFERENCES Car(id) ON DELETE CASCADE,
-    mpg INT,
-    fuel_type VARCHAR(20),
+    mpg INT NOT NULL CHECK (mpg > 0),
+    fuel_type VARCHAR(20) NOT NULL,
     features TEXT
 );
 
