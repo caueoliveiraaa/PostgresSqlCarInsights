@@ -1,11 +1,11 @@
 -- Drop table CarInfo
-DROP TABLE CarInfo;
+DROP TABLE IF EXISTS CarInfo;
 
 -- Drop table Sale
-DROP TABLE Sale;
+DROP TABLE IF EXISTS Sale;
 
 -- Drop table Car
-DROP TABLE Car;
+DROP TABLE IF EXISTS Car;
 
 -- Drop table Dealer
-DROP TABLE Dealer;
+DROP TABLE IF EXISTS Dealer;
