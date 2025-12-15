@@ -43,7 +43,7 @@ class TestSqlReaderSetUpPaths(BaseTestCase):
         self.assertIn("Invalid folder option", str(error.exception))
 
 
-class TestSqlReaderGetContent(BaseTestCase):
+class TestSqlReaderGetContentOfSqlFile(BaseTestCase):
     """Test method 'get_content_of_sql_file' as a unit."""
 
     def test_valid_script_with_dot_sql(self) -> None:
@@ -88,7 +88,7 @@ class TestSqlReaderGetContent(BaseTestCase):
             get_content_of_sql_file("invalid_name", folder_option=1)
 
         self.assertIn(
-            "Could not open 'invalid_name.sql'.",
+            "Could not open 'invalid_name.sql'",
             str(error.exception),
         )
 

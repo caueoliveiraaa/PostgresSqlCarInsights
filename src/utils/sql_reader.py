@@ -57,9 +57,11 @@ def get_content_of_sql_file(file_name: str, folder_option: int = 1) -> str:
     Args:
         file_name (str): Name of the SQL file to read.
         folder_option (int): Which folder to select for retriving SQL queries.
-            1. Setup sql files (Default).
-            2. Queries sql files
-            3. Custom sql files.
+            1. '01_create_scripts/' - (Default)
+            2. '02_read_scripts/'
+            3. '03_update_scripts/'
+            4. '04_delete_scripts/'
+            5. '05_delete_analysis/'
 
     Returns:
         str: The textual SQL script read from disk.
@@ -82,8 +84,8 @@ def get_content_of_sql_file(file_name: str, folder_option: int = 1) -> str:
     try:
         with open(f"{folder_path}{file_name}", "r") as file:
             sql_script = file.read()
-    except OSError:
-        raise ValueError(f"Could not open '{file_name}'.")
+    except OSError as e:
+        raise ValueError(f"Could not open '{file_name}': {e}")
 
     if not sql_script:
         raise ValueError(f"File '{file_name}' is empty.")
