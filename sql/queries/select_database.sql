@@ -1,2 +1,0 @@
--- Selects a database name
-SELECT 1 FROM pg_database WHERE datname = %s;
