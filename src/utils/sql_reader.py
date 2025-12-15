@@ -66,7 +66,8 @@ def get_content_of_sql_file(file_name: str, folder_option: int = 1) -> str:
 
     Raises:
         ValueError:
-            If 'file_name' is empty or the file is empty after reading.
+            In case 'file_name' is empty or the file is empty after reading.
+            In case the program is not able to read the file as it should.
             In case the 'folder_option' is not valid (via 'set_up_paths()').
     """
     if not file_name:
@@ -78,10 +79,13 @@ def get_content_of_sql_file(file_name: str, folder_option: int = 1) -> str:
     sql_script: str = ""
     folder_path: str = set_up_paths(folder_option)
 
-    with open(f"{folder_path}{file_name}", "r") as file:
-        sql_script = file.read()
+    try:
+        with open(f"{folder_path}{file_name}", "r") as file:
+            sql_script = file.read()
+    except OSError:
+        raise ValueError(f"Could not open '{file_name}'.")
 
     if not sql_script:
-        raise ValueError(f"File {file_name} is empty.")
+        raise ValueError(f"File '{file_name}' is empty.")
 
     return sql_script
