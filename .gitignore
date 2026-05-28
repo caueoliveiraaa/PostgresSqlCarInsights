@@ -1,9 +1,4 @@
-# Files
-__pycache__
-Thumbs.db
-notes.txt
-
-# Extensions
+## Extensões
 *.py[cod]
 *$py.class
 *.pyc
@@ -18,21 +13,24 @@ notes.txt
 *.sublime-project
 *.sublime-workspace
 *.egg-info
-*.sublime-project
-*.sublime-workspace
+*.txt
+*.docx
+*.pptx
 
-# Folders
+# Pastas
 ENV/
 VENV/
 env/
 venv/
 logs/
+arquivos/
+screenshot/
 htmlcov/
 build/
 dist/
 *.egg-info/
 
-# Hidden
+# Ocultos
 .pytest_cache/
 .idea/
 .cache/
@@ -41,9 +39,16 @@ dist/
 .mypy_cache
 ./config/.env
 .ipynb_checkpoints/
+.venv
+.ruff_cache
+
+# Arquivos específicos
+__pycache__
+Thumbs.db
+credentials.json
+.secrets.baseline
 
 # Coverage
-.coverage
 nosetests.xml
 coverage.xml
 coverage.json
@@ -53,3 +58,37 @@ htmlcov/
 .tox/
 *.py.cover
 *.py,cover
+
+# Drivers e Binários
+drivers/
+chromedriver.exe
+geckodriver
+msedgedriver.exe
+
+# Playwright (Binários e Browsers locais)
+.auth/
+pw-browsers/
+
+# Evidências de RPA (Imagens e Vídeos de execução)
+screenshots/
+videos/
+recordings/
+trace.zip
+
+# Bancos de dados locais (SQLite)
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache de ferramentas de linting e análise
+.pyre/
+.dmypy.json
+dmypy.json
+.pytype/
+.pylint.d/
+
+# Python local environments
+.python-version
+
+# uv
+.uv

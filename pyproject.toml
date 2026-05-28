@@ -1,31 +1,246 @@
-[tool.black]
-line-length = 88
-target-version = ["py314"]
-exclude = "env|logs|image|.vscode|htmlcov|docs|.github|javascript"
+# --- Configurações de Metadados do Projeto (PEP 621):
 
-[tool.isort]
-profile = "black"
-line_length = 88
-skip = ["env"]
-skip_glob = ["env/*", "logs/*", ".vscode/*", "image/*", ".vscode/*", "docs/*", ".github/*", "javascript/*"]
+[project]
+name = "api" 
+version = "1.0.0"
+authors = [
+    { name = "Cauê" }
+]
+
+readme = "README.md"
+requires-python = ">=3.12"
+
+# Apenas o que o robô precisa para rodar
+dependencies = [
+    "dotenv",
+    "beartype",
+    "python-multipart",
+    "pydantic",
+    "pydantic-settings",
+    "python-jose",
+    "pytest-asyncio",
+    "uvicorn",
+    "Werkzeug",
+    "setuptools",
+    "httpx",
+    "pyodbc",
+    "PySocks",
+    "SQLAlchemy",
+    "aioodbc",
+    "python-dateutil",
+    "types-python-dateutil",
+    "fastapi",
+]
+
+# Ferramentas de desenvolvimento e testes
+[dependency-groups]
+dev = [
+    "coverage",
+    "mypy",
+    "bandit",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "vulture",
+    "deptry",
+    "pre-commit",
+]
+
+
+# --- Sistema de Build:
+
+[build-system]
+requires = [
+    "setuptools>=61.0",
+    "setuptools-scm",
+]
+
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+managed = true
+package = true
+
+
+# --- Configuração de Pacotes:
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+exclude = [
+    "tests*",
+    "env*",
+    "logs*",
+    ".vscode*",
+    ".github*",
+    ".venv*",
+    ".env*",
+]
+
+
+# --- Bandit (Segurança):
 
 [tool.bandit]
-skips = ["B101"]
-exclude_dirs = ["tests", "env", "logs", ".vscode", "image", ".vscode", "docs", ".github", "javascript"]
+exclude_dirs = [
+    "tests",
+    ".venv",
+    ".env",
+]
+
+
+# --- Mypy (Tipagem Estática):
 
 [tool.mypy]
-python_version = "3.14"
+python_version = "3.12"
+mypy_path = "src"
+
+explicit_package_bases = true
+namespace_packages = true
 ignore_missing_imports = true
 strict = true
-exclude = '^(env|logs|.vscode|image|htmlcov|docs|.github|javascript)/'
-disable_error_code = ["union-attr", "attr-defined", "misc"]
+
+exclude = [
+    "venv/",
+    "env/",
+    ".venv/",
+    ".env/",
+    "logs/",
+    ".vscode/",
+    "docs/",
+]
+
+disable_error_code = [
+    "attr-defined",     # acesso aos atributos que o MyPy as vezes não sabe que existe ainda
+]
+
+
+# --- Ruff (Linter e Formatter):
+
+[tool.ruff]
+line-length = 85
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C90",  # mccabe (complexidade ciclomática)
+    "PL",   # pylint (Todas as categorias: PLC, PLE, PLR, PLW)
+    "UP",   # pyupgrade (modernização de sintaxe)
+    "N",    # pep8-naming (padrões de nomes de variáveis/classes)
+    "PT",   # regras de Pytest
+]
+
+[tool.ruff.lint.pylint]
+max-args = 5
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+docstring-code-format = true
+docstring-code-line-length = 83
+
+
+# --- Pytest (Execução de testes):
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+addopts = "-v --cov=src --cov-report=term-missing --cov-fail-under=100"
+
+
+# --- Coverage (Testes):
 
 [tool.coverage.report]
+fail_under = 100
+show_missing = true
+
 exclude_also = [
     "if __name__ == .__main__.:",
+    "def __repr__",
+    "raise NotImplementedError",
+    "@(abc\\.)?abstractmethod",
 ]
 
 [tool.coverage.run]
+source = ["src"]
 omit = [
-    "*/__init__.py"
+    "src/app/database/*",
+    "src/app/core/*",
+    "*/__init__.py",
+]
+
+
+# --- Vulture (Detecção de código morto):
+
+[tool.vulture]
+exclude = [
+    "**/__pycache__",
+    "src/app/database/",
+    ".venv",
+    "venv",
+    "ENV",
+    "env",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".tox",
+    "build",
+    "dist",
+    "htmlcov",
+]
+
+ignore_names = [
+    "model_config",
+    "kwargs",
+    "args",
+    "mock_sleep",
+    "mock_print",
+    "main",
+]
+
+min_confidence = 70
+paths = ["src", "tests"]
+
+
+# --- Deptry (Detecção de Bibliotecas Não Utilizadas):
+
+[tool.deptry.per_rule_ignores]
+DEP002 = [
+    "ruff",
+    "mypy",
+    "bandit",
+    "pytest",
+    "pytest-cov", 
+    "vulture",
+    "pytest-asyncio",
+    "uvicorn",
+    "aioodbc",
+    "deptry",
+    "pre-commit",
+    "python-multipart",
+    "coverage", 
+    "setuptools",
+    "PySocks",
+    "pyodbc",
+    "httpx",
+    "python-dateutil",
+    "pre_commit",
+    "types-python-dateutil",
+]
+
+DEP003 = [
+    "app"
 ]

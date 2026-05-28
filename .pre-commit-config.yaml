@@ -1,62 +1,48 @@
 repos:
   - repo: local
     hooks:
-      - id: isort
-        name: "ISORT: Automatic import organization"
-        entry: isort
+      - id: ruff-format
+        name: "RUFF (Formatter: Black)"
+        entry: uv run ruff format
         language: system
         types: [python]
 
-      - id: black
-        name: "BLACK: Automatic Python code formatting"
-        entry: black
+      - id: ruff-check
+        name: "RUFF (Linter: Flake8, Isort, Pylint)"
+        entry: uv run ruff check --fix
         language: system
         types: [python]
-        args: [--config=pyproject.toml]
 
       - id: mypy
-        name: "MY-PY: Static type checking"
-        entry: mypy
+        name: "MYPY (Tipagem)"
+        entry: uv run mypy .
         language: system
         types: [python]
-        args: [--config-file=pyproject.toml, "--ignore-missing-imports"]
+        pass_filenames: false
 
       - id: bandit
-        name: "BANDIT: Security analysis for Python code"
-        entry: bandit
+        name: "BANDIT (Segurança)"
+        entry: uv run bandit -c pyproject.toml -r .
         language: system
         types: [python]
-        args: [--configfile=pyproject.toml]
+        pass_filenames: false
 
-      - id: flake8
-        name: "FLAKE8: Style and best practice checks"
-        entry: flake8
+      - id: vulture
+        name: "VULTURE (Código Morto)"
+        entry: uv run vulture src/
         language: system
         types: [python]
-        args: [--config=.flake8]
+        pass_filenames: false
 
-      - id: pylint
-        name: "PYLINT: Code quality and standards analysis"
-        entry: pylint
+      - id: deptry
+        name: "DEPTRY (Dependências Inúteis)"
+        entry: uv run deptry .
         language: system
-        types: [python]
-        args: [--rcfile=.pylintrc, --ignore-patterns=.*beartype.*]
-        require_serial: true
+        pass_filenames: false
 
-      - id: run-tests
-        name: "UNITTEST: Run tests with coverage"
-        entry: python
+      - id: pytest
+        name: "PYTEST (Testes e Coverage)"
+        entry: uv run pytest
         language: system
         pass_filenames: false
         always_run: true
-        types: [python]
-        args:
-          - -c
-          - |
-            import subprocess, sys
-            print("Running tests with coverage...")
-            subprocess.call(["coverage", "erase"])
-            if subprocess.call(["coverage", "run", "--branch", "-m", "unittest", "discover", "-s", "tests"]) != 0:
-                sys.exit(1)
-            if subprocess.call(["coverage", "report", "--fail-under=100"]) != 0:
-                sys.exit(1)
